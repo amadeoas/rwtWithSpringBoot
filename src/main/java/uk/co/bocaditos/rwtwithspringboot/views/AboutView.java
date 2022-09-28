@@ -5,12 +5,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
+import uk.co.bocaditos.rwtwithspringboot.config.Messages;
+
 
 @SuppressWarnings("serial")
 public class AboutView extends BaseView {
 
-	AboutView(final Composite parent, final String text) {
-		super(parent, text);
+	AboutView(final Composite parent) {
+		super(parent);
 	}
 
 	@Override
@@ -27,7 +29,7 @@ public class AboutView extends BaseView {
 	public Control buildView(final Object... args) {
 		final Text view = new Text(this, SWT.CENTER);
 
-		view.setText((String) args[0]);
+		view.setText(Messages.get().aboutDescription);
 
 		return view;
 	}

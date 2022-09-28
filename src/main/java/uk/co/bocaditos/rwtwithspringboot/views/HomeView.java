@@ -5,6 +5,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
+import uk.co.bocaditos.rwtwithspringboot.config.Messages;
+
 
 @SuppressWarnings("serial")
 public class HomeView extends BaseView {
@@ -26,7 +28,7 @@ public class HomeView extends BaseView {
 
 	@Override
 	public String getTitle() {
-		return "Home";
+		return Messages.get().homeTitle;
 	}
 
 	@Override

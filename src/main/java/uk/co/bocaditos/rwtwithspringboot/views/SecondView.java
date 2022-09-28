@@ -4,6 +4,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
+import uk.co.bocaditos.rwtwithspringboot.config.Messages;
+
 
 @SuppressWarnings("serial")
 public class SecondView extends BaseView {
@@ -23,14 +25,11 @@ public class SecondView extends BaseView {
 	}
 
 	public static String title() {
-		return "Second View  ";
+		return Messages.get().secondViewTitle;
 	}
 
 	public static String description() {
-		return "This is the SECOND view in the demo. The view needs to be added some funtionality, " 
-				+ "i.e. meaning, by opulatig in with other controls. It has been set a requiring " 
-				+ "to login so when selected it would have first to login before this wiew will be " 
-				+ "visibke.";
+		return Messages.get().secondViewDescription;
 	}
 
 	@Override

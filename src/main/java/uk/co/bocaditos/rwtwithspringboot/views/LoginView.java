@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import uk.co.bocaditos.rwtwithspringboot.config.Messages;
 import uk.co.bocaditos.rwtwithspringboot.views.MainMenuView.MenuItem;
 
 
@@ -23,7 +24,10 @@ public class LoginView extends Composite {
 	public static final int MIN_HEIGHT = 400;
 	
 	private static final long AUTH_TIME = 1 * 30 * 1000; // milliseconds
-	
+
+	private final String loginTxt;
+	private final String logoutTxt;
+
 	private final Text username;
 	private final Text password;
 	
@@ -36,6 +40,8 @@ public class LoginView extends Composite {
 	public LoginView(final Composite parent) {
 		super(parent, SWT.NONE);
 
+		this.loginTxt  = Messages.get().login;
+		this.logoutTxt = Messages.get().logout;
 		setLayout(new CentreLayout(this, 200, 300));
 
 		final GridData gridData = new GridData();
@@ -63,7 +69,7 @@ public class LoginView extends Composite {
 
 		final Button button = new Button(view, SWT.PUSH);
 
-		button.setText(MainMenuView.MENU_LOGIN);
+		button.setText(this.loginTxt);
 		button.addSelectionListener(new SelectionAdapter() {
 
 	            @Override
@@ -74,7 +80,7 @@ public class LoginView extends Composite {
 	        	   		final MainMenuView menu = getMenuView();
 	        	   		
 	       	   			LoginView.this.loggedIn = true;
-	       	   			menu.setLogInOut(MainMenuView.MENU_LOGOUT);
+	       	   			menu.setLogInOut(LoginView.this.logoutTxt);
 	       	   			menu.setVisible(LoginView.this.viewIndex);
 	       	   			clear();
 	       			}
@@ -99,7 +105,7 @@ public class LoginView extends Composite {
 
 		this.viewIndex = viewIndex;
 		this.loggedIn = false;
-		((MainMenuView) parent.getChildren()[0]).setLogInOut(MainMenuView.MENU_LOGIN);
+		((MainMenuView) parent.getChildren()[0]).setLogInOut(this.loginTxt);
 		clear();
 		setVisible(true);
 
@@ -171,15 +177,15 @@ public class LoginView extends Composite {
 							    public void run() {
 									if (!LoginView.this.isDisposed()) {
 					        	   		final MainMenuView menu = getMenuView();
-					        	   		final MenuItem item = (MenuItem) menu
-					        	   				.getComponent(MainMenuView.INDEX_MENU)
+					        	   		final MenuItem item = (MenuItem) ((Composite) menu
+					        	   				.getComponent(MainMenuView.INDEX_MENU))
 					        	   				.getChildren()[LoginView.this.viewIndex];
 
 					        	   		if (item.needs2Login()) {
 											LoginView.this.display(LoginView.this.viewIndex);
 										} else {
 											LoginView.this.loggedIn = false;
-						       	   			menu.setLogInOut(MainMenuView.MENU_LOGIN);
+						       	   			menu.setLogInOut(LoginView.this.loginTxt);
 										}
 									}
 							    }

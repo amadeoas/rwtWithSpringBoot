@@ -11,12 +11,14 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import uk.co.bocaditos.rwtwithspringboot.config.Messages;
+
 
 @SuppressWarnings("serial")
 public class Card extends Composite {
 
 	public static final int MIN_WIDTH  = 200;
-	public static final int MIN_HEIGHT = 220;
+	public static final int MIN_HEIGHT = 260;
 	public static final int TOP_BOTTOM_HEIGHT = 40; // minimum height for the control
 
 	private Label titleView;
@@ -28,7 +30,6 @@ public class Card extends Composite {
 			final String... buttonLabels) {
 		super(parent, style);
 
-//	    setBackground(getDisplay().getSystemColor(SWT.COLOR_GRAY));
 	    setBounds(0, 0, MIN_WIDTH, MIN_HEIGHT);
 		setLayout(new BorderLayout());
 
@@ -139,17 +140,20 @@ public class Card extends Composite {
 		final Composite buttonsView = new Composite(bottomPanel, SWT.NONE);
 
 		buttonsView.setLayoutData(new GridData(SWT.FILL, SWT.RIGHT, true, false));
-		buttonsView.setBackground(getDisplay().getSystemColor(SWT.COLOR_GRAY));
-		for (final String btnLabel : buttonLabels) {
+		if (buttonLabels == null || buttonLabels.length == 0) {
 			final Button btn = new Button(buttonsView, SWT.PUSH);
+			
+			btn.setText(Messages.get().cardBtnTitle);
+			btn.setBounds(0, 0, (MIN_WIDTH - 20), TOP_BOTTOM_HEIGHT);
+		} else {
+			for (final String btnLabel : buttonLabels) {
+				final Button btn = new Button(buttonsView, SWT.PUSH);
 
-			btn.setText(btnLabel);
-			btn.setBounds(0, 0, (MIN_WIDTH - 20) / buttonLabels.length, TOP_BOTTOM_HEIGHT);
-			btn.setBackground(getDisplay().getSystemColor(SWT.COLOR_YELLOW));
-			btn.pack();
+				btn.setText(btnLabel);
+				btn.setBounds(0, 0, (MIN_WIDTH - 20) / buttonLabels.length, TOP_BOTTOM_HEIGHT);
+			}
 		}
 		bottomPanel.setBounds(0, 0, MIN_WIDTH, TOP_BOTTOM_HEIGHT);
-		bottomPanel.pack();
 
 		return buttonsView;
 	}

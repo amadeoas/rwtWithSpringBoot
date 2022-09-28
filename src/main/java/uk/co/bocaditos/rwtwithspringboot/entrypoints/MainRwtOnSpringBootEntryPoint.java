@@ -13,7 +13,7 @@ import uk.co.bocaditos.rwtwithspringboot.views.MainView;
 
 
 /**
- * Example RWT EntryPoint that is associated with the RWT application in 
+ * RWT EntryPoint that is associated with the RWT application in 
  * config.RwtApplicationConfiguration.
  */
 @SuppressWarnings("serial")

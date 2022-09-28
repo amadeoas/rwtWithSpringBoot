@@ -5,6 +5,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 
+import uk.co.bocaditos.rwtwithspringboot.config.Messages;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StackLayout;
@@ -30,9 +32,6 @@ public class MainMenuView extends Composite {
 	public static final int INDEX_HEADER = 0;
 	public static final int INDEX_MENU 	 = 1;
 	public static final int INDEX_FOOTER = 2;
-
-	static final String MENU_LOGOUT = "Logout";
-	static final String MENU_LOGIN  = "Login  ";
 	
 	// Views indexes
 	public static int VIEW_INDEX_HOME = 0;
@@ -44,6 +43,8 @@ public class MainMenuView extends Composite {
 	
 	/**
 	 * Representation of a menu item, clickable/selectable.
+	 * 
+	 * Expected to be part of a GridLayout.
 	 * 
 	 * @author aasco
 	 */
@@ -59,8 +60,9 @@ public class MainMenuView extends Composite {
 
 		public MenuItem(final Composite parent, final String text, final int viewIndex, 
 				final int sysIcon) {
-			super(parent, SWT.PUSH);
+			super(parent, SWT.PUSH | SWT.FILL);
 
+			setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 			if (viewIndex < 0 || viewIndex >= MainMenuView.this.views.getChildren().length) {
 				this.view = null;
 			} else {
@@ -87,46 +89,7 @@ public class MainMenuView extends Composite {
 				@Override
 				public void mouseUp(final MouseEvent me) {
 					// A click
-					final MenuItem item = (MenuItem) me.getSource();
-
-					if (!item.isEnabled() 
-							|| (item.isSelected() && ((StackLayout) MainMenuView.this.getParent().getParent().getParent().getLayout()).topControl != null)) {
-						return;
-					}
-
-					if (MENU_LOGOUT == item.getText() || MENU_LOGIN == item.getText()) {
-						// TODO: Move to Login page
-						final Composite parent = MainMenuView.this.getParent();
-						final Composite p = parent.getParent().getParent();
-
-						MainView.setVisible(p, MainView.VIEW_INDEX_LOGIN);
-
-						return;
-					}
-
-					final Control[] ctrls = MenuItem.this.getParent().getChildren();
-					int indexView = -1;
-					MenuItem prevSelected = null;
-	
-					for (int index = 0; index < ctrls.length; ++index) {
-						final MenuItem it = (MenuItem) ctrls[index];
-
-						if (indexView == -1 && it == item) {
-							indexView = index;
-
-							continue;
-						} else if (it.isSelected()) {
-							prevSelected = it;
-						}
-					}
-
-					if (indexView > -1) {
-						if (prevSelected != null) {
-							prevSelected.setSelected(false);
-						}
-						item.setSelected(true);
-						MainMenuView.this.views.setVisible(indexView);
-					}
+					MainMenuView.this.setView((MenuItem) me.getSource());
 				}
 			});
 		}
@@ -152,12 +115,14 @@ public class MainMenuView extends Composite {
 	} // end class MenuItem
 
 
+	private final String loginTxt;
+	private final String logoutTxt;
+
 	private final Composite header;
 	private final Composite menu;
-	private final Composite footer;
+	private final MenuItem footer;
 
 	private final Views views;
-	private MenuItem logInOut;
 
 
 	/**
@@ -166,6 +131,8 @@ public class MainMenuView extends Composite {
 	MainMenuView(final MainView parent) {
 		super(new SashForm(parent, SWT.HORIZONTAL), SWT.CENTER);
 
+		this.loginTxt  = Messages.get().login;
+		this.logoutTxt = Messages.get().logout;
 		setLayout(new BorderLayout());
 
 		this.views = new Views(getParent());
@@ -177,7 +144,7 @@ public class MainMenuView extends Composite {
 		((SashForm) getParent()).setWeights(new int[] {1, 4});
 	}
 	
-	public void setVisible(final int viewIndex) {
+	public final void setVisible(final int viewIndex) {
 		if (viewIndex < 0 || viewIndex > this.menu.getChildren().length) {
 			// Nothing to do
 			// TODO: log/report issue
@@ -210,12 +177,21 @@ public class MainMenuView extends Composite {
 		menuItem.notifyListeners(SWT.MouseUp, event);
 	}
 	
-	MenuItem getLogInOut() {
-		return this.logInOut;
+	final MenuItem getLogInOut() {
+		return this.footer;
 	}
 
-	void setLogInOut(final String txt) {
-		this.logInOut.setText(txt);
+	final void setLogInOut(final String txt) {
+		this.footer.setText(txt);
+	}
+	
+	final void setView(final int viewIndex) {
+		if (viewIndex < 0 && viewIndex >= this.menu.getChildren().length) {
+			// TODO: log message
+
+			return;
+		}
+		setView(getMenuItem(viewIndex));
 	}
 	
 	int clearSelection() {
@@ -234,8 +210,8 @@ public class MainMenuView extends Composite {
 		return selectedIndex;
 	}
 
-	Composite getComponent(final int index) {
-		final Composite comp;
+	Control getComponent(final int index) {
+		final Control comp;
 
 		switch (index) {
 			case INDEX_HEADER: 
@@ -260,6 +236,50 @@ public class MainMenuView extends Composite {
 		return comp;
 	}
 	
+	private MenuItem getMenuItem(final int viewIndex) {
+		return (MenuItem) ((Composite) this.menu.getParent().getChildren()[0]).getChildren()[viewIndex];
+	}
+
+	private void setView(final MenuItem item) {
+		if (!item.isEnabled() 
+				|| (item.isSelected() && ((StackLayout) this.getParent().getParent().getParent().getLayout()).topControl != null)) {
+			return;
+		}
+
+		if (this.logoutTxt == item.getText() || this.loginTxt == item.getText()) {
+			final Composite parent = this.getParent();
+			final Composite p = parent.getParent().getParent();
+
+			MainView.setVisible(p, MainView.VIEW_INDEX_LOGIN);
+
+			return;
+		}
+
+		final Control[] ctrls = ((Composite) this.menu.getParent().getChildren()[0]).getChildren();
+		int indexView = -1;
+		MenuItem prevSelected = null;
+
+		for (int index = 0; index < ctrls.length; ++index) {
+			final MenuItem it = (MenuItem) ctrls[index];
+
+			if (indexView == -1 && it == item) {
+				indexView = index;
+
+				continue;
+			} else if (it.isSelected()) {
+				prevSelected = it;
+			}
+		}
+
+		if (indexView > -1) {
+			if (prevSelected != null) {
+				prevSelected.setSelected(false);
+			}
+			item.setSelected(true);
+			this.views.setVisible(indexView);
+		}
+	}
+	
 	private Composite buildHeader() {
 		final Composite panel = new Composite(this, SWT.LEFT_TO_RIGHT);
 
@@ -276,7 +296,7 @@ public class MainMenuView extends Composite {
 		// App name
 		final Label label = new Label(header, SWT.LEFT);
 		
-		label.setText("Testing");
+		label.setText(Messages.get().title);
 		
 		// Separator
 		final Label separator = new Label(panel, SWT.SEPARATOR | SWT.SHADOW_OUT | SWT.HORIZONTAL);
@@ -291,22 +311,22 @@ public class MainMenuView extends Composite {
 		final Composite menu = new Composite(m, SWT.NONE);
 		final GridLayout layout = new GridLayout(1, true);
 
-		m.setLayout(new FillLayout(SWT.VERTICAL));
+		m.setLayout(new GridLayout(5, true));
+//		m.setLayout(new FillLayout(SWT.VERTICAL | SWT.FILL));
 		LayoutLocation.CENTRE.setLayoutData(m);
 		layout.marginLeft = 2;
 		layout.marginRight = 1;
 		menu.setLayout(layout);
-		buildMenuItem(menu, "Home ");
-		buildMenuItem(menu, "Candidate Search   ");
-		buildMenuItem(menu, "Cleanse Match  ");
-		buildMenuItem(menu, "Forge Data ");
-		buildMenuItem(menu, "About ");
-		
+		buildMenuItem(menu, Messages.get().homeTitle);
+		buildMenuItem(menu, Messages.get().firstViewTitle);
+		buildMenuItem(menu, Messages.get().secondViewTitle);
+		buildMenuItem(menu, Messages.get().thirdViewTitle);
+		buildMenuItem(menu, Messages.get().aboutTitle);
 
 		return menu;
 	}
 	
-	private Composite buildFooter() {
+	private MenuItem buildFooter() {
 		final Composite panel = new Composite(this, SWT.LEFT_TO_RIGHT);
 
 		panel.setLayout(new GridLayout(1, false));
@@ -318,16 +338,9 @@ public class MainMenuView extends Composite {
 		separator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		// Footer
-		final Composite menu = new Composite(panel, SWT.LEFT_TO_RIGHT);
+		final MenuItem logInOut = buildLoginMenuItem(panel);
 
-		menu.setLayout(new FillLayout(SWT.VERTICAL));
-
-		// Popup to confirm log out
-		
-		// Log in view. Remember to clear all previous values
-		this.logInOut = buildLoginMenuItem(menu);
-
-		return menu;
+		return logInOut;
 	}
 	
 	private MenuItem buildMenuItem(final Composite mainMenuBar, final String text) {
@@ -335,7 +348,7 @@ public class MainMenuView extends Composite {
 	}
 	
 	private MenuItem buildLoginMenuItem(final Composite mainMenuBar) {
-		return new MenuItem(mainMenuBar, MENU_LOGIN, -1) {
+		return new MenuItem(mainMenuBar, this.loginTxt, -1) {
 
 			@Override
 			public void setSelected(final boolean selected) {
@@ -382,8 +395,7 @@ class Views extends Composite {
 		new FirstView(this);
 		new SecondView(this);
 		new ThirdView(this);
-		new AboutView(this, "This Website allows to interrogate any of three APIs and shows their " 
-				+ "corresponding replies.");
+		new AboutView(this);
 	}
 
 } // end class Views
