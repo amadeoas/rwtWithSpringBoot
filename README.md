@@ -33,7 +33,7 @@ Alternatively, you can use `bootJar` to create a runnable standalone jar file wi
 ```bash
 gradlew bootJar
 
-java -jar build/libs/rwt-with-spring-boot-0.0.1-SNAPSHOT.jar
+java -jar build/libs/rwtwithspringboot-0.0.1-SNAPSHOT.jar
 ```
 
 ## Deploying as a WAR file
