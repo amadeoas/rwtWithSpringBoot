@@ -6,7 +6,21 @@ This example shows:
 * how to integrate the moving parts of RWT with a Spring Boot web application (Spring MVC),
 * how to leverage Spring managed beans, dependency injection and a pure programmatic way of configuring and wiring together an RWT application (no need for a web.xml),
 * how to provide a menu,
-* how to provide support to login (sample very simple using only one account with username "user" and password "user")
+* how to provide support to login (sample very simple using only one account with username "user" and password "user"),
+* how to use buttons,
+* how to use clickable Labels, i.e. links
+
+This APP is compose of two main views the menu side on the left and the data side on the right.
+The menu side is compose of three distinctive areas a top one with the name of the APP, middle side with the menu, and a button side (footer) with the login/logout.
+
+The menu provides five views, which are:
+- **Home**: starting page, which does not require to be logged in to see it.
+- **First view**: the first customised view, which requires to be logged in to see it.
+- **Second view**: the second customised view, which requires to be logged in to see it.
+- **Third view**: the third customised view, which requires to be logged in to see it.
+- **About**: Some data about the application, which does not require to be logged in to see it.
+
+If a view that requires to be logged in before it can be seen is selected/clicked and it is not already logged in then the login page is displayed. On successful logged in the previously selected/clicked view is displayed.
 
 The example is not sophisticated, but you should give an idea on using [Eclipse RAP](https://www.eclipse.org/rap/developers-guide/) and [String Boot](https://spring.io/projects/spring-boot).
 
