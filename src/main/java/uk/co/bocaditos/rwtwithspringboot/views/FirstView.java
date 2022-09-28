@@ -40,4 +40,4 @@ public class FirstView extends BaseView {
 		return view;
 	}
 
-} // end class CandidateSearchView
+} // end class FirstView
