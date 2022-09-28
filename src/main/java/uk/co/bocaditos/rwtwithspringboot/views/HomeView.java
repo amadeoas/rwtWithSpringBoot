@@ -1,6 +1,8 @@
 package uk.co.bocaditos.rwtwithspringboot.views;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -47,14 +49,38 @@ public class HomeView extends BaseView {
 
 		card = new Card(centreView, SWT.NONE, FirstView.title());
 		card.buildTextBodyView(FirstView.description());
+		addButtonListener(card, 0);
 
 		card = new Card(centreView, SWT.NONE, SecondView.title());
 		card.buildTextBodyView(SecondView.description());
+		addButtonListener(card, 1);
 		
 		card = new Card(centreView, SWT.NONE, ThirdView.title());
 		card.buildTextBodyView(ThirdView.description());
+		addButtonListener(card, 2);
 
 		return view;
+	}
+	
+	private void addButtonListener(final Card card, final int buttonIndex) {
+		card.setButtonListener(buttonIndex, new SelectionListener() {
+
+			@Override
+			public void widgetSelected(final SelectionEvent se) {
+				Composite ctrl = getParent();
+
+				ctrl = ctrl.getParent().getParent();
+				final MainMenuView menu = ((MainView) ctrl).getMainMenu();
+
+				menu.setView(buttonIndex + 1);
+			}
+
+			@Override
+			public void widgetDefaultSelected(final SelectionEvent se) {
+				// Nothing to do
+			}
+
+		});
 	}
 
 } // end class HomeView

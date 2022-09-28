@@ -35,9 +35,9 @@ public class MainMenuView extends Composite {
 	
 	// Views indexes
 	public static int VIEW_INDEX_HOME = 0;
-	public static int VIEW_INDEX_CANDIDATE_SEARCH = 1;
-	public static int VIEW_INDEX_CLEANSE_MATCH = 2;
-	public static int VIEW_INDEX_DATA_ACCESS = 3;
+	public static int VIEW_INDEX_FIRST_VIEW = 1;
+	public static int VIEW_INDEX_SECOND_VIEW = 2;
+	public static int VIEW_INDEX_THIRD_VIEW = 3;
 	public static int VIEW_INDEX_ABOUT = 4;
 
 	

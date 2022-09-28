@@ -1,6 +1,7 @@
 package uk.co.bocaditos.rwtwithspringboot.views;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
@@ -36,6 +37,15 @@ public class Card extends Composite {
 	    this.titleView = buildTopView(this, title);
 	    this.bodyView = buildBodyView(this);
 	    this.buttonsView = buildBottomView(this, buttonLabels);
+	}
+	
+	public void setButtonListener(final int buttonIndex ,final SelectionListener listener) {
+		if (buttonIndex < 0 || buttonIndex >= this.buttonsView.getChildren().length) {
+			// TODO: log message
+
+			return;
+		}
+		((Button) this.buttonsView.getChildren()[buttonIndex]).addSelectionListener(listener);
 	}
 	
 	public void setTitle(final String title) {
