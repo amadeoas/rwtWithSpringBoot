@@ -22,9 +22,8 @@ public class LoginView extends Composite {
 
 	public static final int MIN_WIDTH  = 400;
 	public static final int MIN_HEIGHT = 400;
-	
-	private static final long AUTH_TIME = 1 * 30 * 1000; // milliseconds
 
+	private final long loginTimeout;
 	private final String loginTxt;
 	private final String logoutTxt;
 
@@ -40,6 +39,7 @@ public class LoginView extends Composite {
 	public LoginView(final Composite parent) {
 		super(parent, SWT.NONE);
 
+		this.loginTimeout = Long.parseLong(Messages.get().logTimeout);
 		this.loginTxt  = Messages.get().login;
 		this.logoutTxt = Messages.get().logout;
 		setLayout(new CentreLayout(this, 200, 300));
@@ -169,7 +169,7 @@ public class LoginView extends Composite {
 			public void run() {
 				if (!LoginView.this.isDisposed() && LoginView.this.isLoggedIn()) {
 					try {
-						Thread.sleep(AUTH_TIME);
+						Thread.sleep(LoginView.this.loginTimeout);
 						if (!LoginView.this.isDisposed()) {
 							LoginView.this.getDisplay().asyncExec(new Runnable() {
 			

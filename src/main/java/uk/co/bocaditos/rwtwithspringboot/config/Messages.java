@@ -13,6 +13,8 @@ public class Messages {
 	public String title;
 	public String login;
 	public String logout;
+	
+	public String logTimeout;
 
 	public String cardBtnTitle;
 

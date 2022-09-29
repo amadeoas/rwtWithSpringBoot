@@ -22,6 +22,8 @@ The menu provides five views, which are:
 
 If a view that requires to be logged in before it can be seen is selected/clicked and it is not already logged in then the login page is displayed. On successful logged in the previously selected/clicked view is displayed.
 
+The login time out is set in the messages.properties file together with the text used in the UI. This timeout is in milliseconds, which indicate the maximum period of time the views requiring login will be visible and after which the application will logout and a new login will be required for those pages that require login.
+
 The example is not sophisticated, but you should give an idea on using [Eclipse RAP](https://www.eclipse.org/rap/developers-guide/) and [String Boot](https://spring.io/projects/spring-boot).
 
 # Getting Started
