@@ -24,6 +24,10 @@ If a view that requires to be logged in before it can be seen is selected/clicke
 
 The login time out is set in the messages.properties file together with the text used in the UI. This timeout is in milliseconds, which indicate the maximum period of time the views requiring login will be visible and after which the application will logout and a new login will be required for those pages that require login.
 
+Below is presented an screenshot of one of the pages of the UI.
+
+<img src="docs/demoUI.png" width="900"/>
+
 The example is not sophisticated, but you should give an idea on using [Eclipse RAP](https://www.eclipse.org/rap/developers-guide/) and [String Boot](https://spring.io/projects/spring-boot).
 
 # Getting Started
