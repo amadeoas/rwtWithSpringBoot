@@ -4,8 +4,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Text;
 
 import uk.co.bocaditos.rwtwithspringboot.config.Messages;
 
@@ -36,16 +38,31 @@ public class HomeView extends BaseView {
 	@Override
 	public Control buildView(final Object... args) {
 		final Composite view = new Composite(this, SWT.NONE);
+		final RowLayout rowLayout = new RowLayout();
+		final Text description;
 		final Composite centreView;
 		Card card;
 
-		view.setLayout(new CentreLayout(view, 
-				(Card.MIN_WIDTH * NUM_CARDS) + ((MARGIN_LEFT + MARGIN_RIGHT) * (NUM_CARDS + 1)), 
-				Card.MIN_HEIGHT));
+//		view.setLayout(new CentreLayout(view, 
+//				(Card.MIN_WIDTH * NUM_CARDS) + ((MARGIN_LEFT + MARGIN_RIGHT) * (NUM_CARDS + 1)), 
+//				Card.MIN_HEIGHT));
 
+		view.setLayout(new BorderLayout());
+		description = new Text(view, SWT.FILL);
+		description.setText(Messages.get().homeDescription);
+		LayoutLocation.NORTH.setLayoutData(description);
 		centreView = new Composite(view, SWT.NONE);
-		centreView.setLayout(new FillLayout());
-		CentreLayout.setLayoutData(centreView);
+		LayoutLocation.CENTRE.setLayoutData(centreView);
+	    rowLayout.wrap = true;
+	    rowLayout.pack = false;
+	    rowLayout.justify = true;
+	    rowLayout.marginLeft = 5;
+	    rowLayout.marginTop = 5;
+	    rowLayout.marginRight = 5;
+	    rowLayout.marginBottom = 5;
+	    rowLayout.spacing = 0;
+		centreView.setLayout(rowLayout);
+//		CentreLayout.setLayoutData(centreView);
 
 		card = new Card(centreView, SWT.NONE, FirstView.title());
 		card.buildTextBodyView(FirstView.description());

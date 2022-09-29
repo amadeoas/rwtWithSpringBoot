@@ -68,6 +68,10 @@ public class MainMenuView extends Composite {
 			} else {
 				this.view = (BaseView) MainMenuView.this.views.getChildren()[viewIndex];
 			}
+
+//			setData( RWT.MARKUP_ENABLED, Boolean.TRUE );
+//			String src = RWT.getResourceManager().getLocation( "icon.png" );
+//			setText( "This is the world <img width='24' height='24' src='" + src + "'/> !" );
 			setText(text);
 			if (sysIcon >= SWT.ICON_ERROR) {
 				// e.g. SWT.ICON_QUESTION

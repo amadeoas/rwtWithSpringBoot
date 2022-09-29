@@ -19,7 +19,7 @@ import uk.co.bocaditos.rwtwithspringboot.config.Messages;
 public class Card extends Composite {
 
 	public static final int MIN_WIDTH  = 200;
-	public static final int MIN_HEIGHT = 260;
+	public static final int MIN_HEIGHT = 280;
 	public static final int TOP_BOTTOM_HEIGHT = 40; // minimum height for the control
 
 	private Label titleView;
