@@ -149,18 +149,23 @@ public class Card extends Composite {
 		// Footer
 		final Composite buttonsView = new Composite(bottomPanel, SWT.NONE);
 
+		buttonsView.setLayout(new GridLayout(1, false));
 		buttonsView.setLayoutData(new GridData(SWT.FILL, SWT.RIGHT, true, false));
 		if (buttonLabels == null || buttonLabels.length == 0) {
 			final Button btn = new Button(buttonsView, SWT.PUSH);
 			
 			btn.setText(Messages.get().cardBtnTitle);
 			btn.setBounds(0, 0, (MIN_WIDTH - 20), TOP_BOTTOM_HEIGHT);
+			btn.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, true));
+			btn.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		} else {
 			for (final String btnLabel : buttonLabels) {
 				final Button btn = new Button(buttonsView, SWT.PUSH);
 
 				btn.setText(btnLabel);
 				btn.setBounds(0, 0, (MIN_WIDTH - 20) / buttonLabels.length, TOP_BOTTOM_HEIGHT);
+				btn.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, true));
+				btn.setBackground(getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 			}
 		}
 		bottomPanel.setBounds(0, 0, MIN_WIDTH, TOP_BOTTOM_HEIGHT);

@@ -338,7 +338,14 @@ public class MainMenuView extends Composite {
 		separator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
 		// Footer
-		final MenuItem logInOut = buildLoginMenuItem(panel);
+		final Composite m = new Composite(panel, SWT.NONE);
+		final GridLayout layout = new GridLayout(1, true);
+		final MenuItem logInOut;
+
+		layout.marginLeft = 2;
+		layout.marginRight = 1;
+		m.setLayout(layout);
+		logInOut = buildLoginMenuItem(m);
 
 		return logInOut;
 	}
