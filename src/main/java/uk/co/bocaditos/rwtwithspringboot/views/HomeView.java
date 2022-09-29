@@ -3,7 +3,7 @@ package uk.co.bocaditos.rwtwithspringboot.views;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -14,11 +14,6 @@ import uk.co.bocaditos.rwtwithspringboot.config.Messages;
 
 @SuppressWarnings("serial")
 public class HomeView extends BaseView {
-	
-	private static final int NUM_CARDS = 3;
-	
-	private static final int MARGIN_LEFT  = 5;
-	private static final int MARGIN_RIGHT = 5;
 
 
 	HomeView(final Composite parent) {
@@ -38,21 +33,23 @@ public class HomeView extends BaseView {
 	@Override
 	public Control buildView(final Object... args) {
 		final Composite view = new Composite(this, SWT.NONE);
-		final RowLayout rowLayout = new RowLayout();
+		RowLayout rowLayout;
 		final Text description;
 		final Composite centreView;
 		Card card;
 
-//		view.setLayout(new CentreLayout(view, 
-//				(Card.MIN_WIDTH * NUM_CARDS) + ((MARGIN_LEFT + MARGIN_RIGHT) * (NUM_CARDS + 1)), 
-//				Card.MIN_HEIGHT));
-
+		// Description section
 		view.setLayout(new BorderLayout());
-		description = new Text(view, SWT.FILL);
+		description = new Text(view, SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
 		description.setText(Messages.get().homeDescription);
+		description.setLayoutData(new GridData( GridData.FILL_HORIZONTAL)); // with this in addition, it will wrap
 		LayoutLocation.NORTH.setLayoutData(description);
+
+		// Cards section
 		centreView = new Composite(view, SWT.NONE);
 		LayoutLocation.CENTRE.setLayoutData(centreView);
+		rowLayout = new RowLayout();
+		rowLayout = new RowLayout();
 	    rowLayout.wrap = true;
 	    rowLayout.pack = false;
 	    rowLayout.justify = true;
@@ -62,7 +59,6 @@ public class HomeView extends BaseView {
 	    rowLayout.marginBottom = 5;
 	    rowLayout.spacing = 0;
 		centreView.setLayout(rowLayout);
-//		CentreLayout.setLayoutData(centreView);
 
 		card = new Card(centreView, SWT.NONE, FirstView.title());
 		card.buildTextBodyView(FirstView.description());
