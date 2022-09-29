@@ -21,6 +21,11 @@ public class AboutView extends BaseView {
 	}
 
 	@Override
+	public String getId() {
+		return "about";
+	}
+
+	@Override
 	public String getTitle() {
 		return "About";
 	}

@@ -8,6 +8,7 @@ import org.eclipse.swt.widgets.Label;
 import uk.co.bocaditos.rwtwithspringboot.config.Messages;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.MouseEvent;
@@ -292,15 +293,11 @@ public class MainMenuView extends Composite {
 
 		// Header
 		final Composite header = new Composite(panel, SWT.LEFT_TO_RIGHT);
+		final CLabel label = new CLabel(header, SWT.BORDER | SWT.CENTER);
 
 		header.setLayout(new FillLayout(SWT.HORIZONTAL));
-
-		// TODO: Icon
-		
-		// App name
-		final Label label = new Label(header, SWT.LEFT);
-		
 		label.setText(Messages.get().title);
+		label.setImage(MainView.getImage(getDisplay(), "/api.png"));
 		
 		// Separator
 		final Label separator = new Label(panel, SWT.SEPARATOR | SWT.SHADOW_OUT | SWT.HORIZONTAL);

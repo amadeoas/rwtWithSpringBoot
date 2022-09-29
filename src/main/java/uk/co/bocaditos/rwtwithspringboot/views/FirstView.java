@@ -24,6 +24,11 @@ public class FirstView extends BaseView {
 		return title();
 	}
 
+	@Override
+	public String getId() {
+		return "first";
+	}
+
 	public static String title() {
 		return Messages.get().firstViewTitle;
 	}

@@ -24,6 +24,11 @@ public class SecondView extends BaseView {
 		return title();
 	}
 
+	@Override
+	public String getId() {
+		return "second";
+	}
+
 	public static String title() {
 		return Messages.get().secondViewTitle;
 	}

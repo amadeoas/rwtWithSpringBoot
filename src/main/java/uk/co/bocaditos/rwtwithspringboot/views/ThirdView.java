@@ -24,6 +24,11 @@ public class ThirdView extends BaseView {
 		return title();
 	}
 
+	@Override
+	public String getId() {
+		return "third";
+	}
+
 	public static String title() {
 		return Messages.get().thirdViewTitle;
 	}

@@ -31,6 +31,11 @@ public class HomeView extends BaseView {
 	}
 
 	@Override
+	public String getId() {
+		return "home";
+	}
+
+	@Override
 	public Control buildView(final Object... args) {
 		final Composite view = new Composite(this, SWT.NONE);
 		RowLayout rowLayout;

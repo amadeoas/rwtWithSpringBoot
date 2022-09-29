@@ -1,6 +1,7 @@
 package uk.co.bocaditos.rwtwithspringboot.views;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
@@ -33,6 +34,8 @@ public abstract class BaseView extends Composite {
 
 	public abstract Control buildView(final Object... args);
 
+	public abstract String getId();
+
 	public boolean hasFootter() {
 		return false;
 	}
@@ -47,7 +50,7 @@ public abstract class BaseView extends Composite {
 		topPanel.setLayout(new GridLayout(1, false));
 		LayoutLocation.NORTH.setLayoutData(topPanel);
 
-		final Label title = new Label(topPanel, SWT.CENTER);
+		final CLabel title = new CLabel(topPanel, SWT.CENTER);
 		final FontData fontData = title.getFont().getFontData()[0];
 		final Font font = new Font(getDisplay(), 
 				new FontData(fontData.getName(), fontData.getHeight(), SWT.BOLD));
@@ -55,6 +58,7 @@ public abstract class BaseView extends Composite {
 
 		title.setFont(font);
 		title.setText(getTitle());
+		title.setImage(MainView.getImage(getDisplay(), "/" + getId() + ".png"));
 		
 		// Separator
 		separator = new Label(topPanel, SWT.SEPARATOR | SWT.SHADOW_OUT | SWT.HORIZONTAL);

@@ -3,9 +3,11 @@ package uk.co.bocaditos.rwtwithspringboot.views;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
@@ -128,6 +130,10 @@ public class MainView extends Composite {
 
 			((MainMenuView) ctrls[0]).setVisible(viewIndex);
 		}
+	}
+
+	static Image getImage(final Display display, final String imagePath) {
+		return new Image(display, MainView.class.getResourceAsStream(imagePath));
 	}
 
 } // end class MainView
